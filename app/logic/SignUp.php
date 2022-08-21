@@ -2,6 +2,8 @@
 
 class SignUp
 {
+    private $errors;
+
     public function getTableName(): string
     {
         return "users";
@@ -17,5 +19,10 @@ class SignUp
             "password" => "string",
             "name" => "string",
         ];
+    }
+
+    public function signUpUser()
+    {
+
     }
 }

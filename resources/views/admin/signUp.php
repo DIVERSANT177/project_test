@@ -1,7 +1,6 @@
 <?php
 include "app/header.php";
-$signUp = new SignUp();
-$fieldsSignUp = $signUp->getFields();
+$fieldsSignUp = AdminActions::getFields();
 ?>
 
 <div>
@@ -13,19 +12,25 @@ $fieldsSignUp = $signUp->getFields();
             <?php
             foreach ($fieldsSignUp as $field => $value)
             {
-                echo "<input type='$value' name='$field' placeholder='$field' class='col-12 mt-4 p-2'>";
+                if($field == "password")
+                    echo "<input type='password' name='$field' placeholder='$field' value=\"$_POST[$field]\" class='col-12 mt-4 p-2'>";
+                else
+                    echo "<input type='$value' name='$field' placeholder='$field' value=\"$_POST[$field]\" class='col-12 mt-4 p-2'>";
             }
             ?>
-            <button class="btn btn-primary mt-5">
+            <button class="btn btn-primary mt-5" name="signUp">
                 Зарегистрироваться
             </button>
         </form>
+        <div class="text-danger">
+            <?= AdminActions::signUp(); ?>
+        </div>
     </div>
-
 </div>
 
 </body>
 </html>
 
 <?php
+
 
