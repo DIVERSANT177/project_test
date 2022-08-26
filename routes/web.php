@@ -7,9 +7,6 @@ $template = 'resources/views/';
 if($route == "/"){
     include $template . "index.php";
 }else if ($route == "/admin/signUp"){
-    include "app/DB.php";
-    include "app/actions/AdminActions.php";
-    include "app/logic/SignUp.php";
     include $template . "admin/signUp.php";
 } else if($route == "/admin/signIn"){
     include $template . "admin/signIn.php";

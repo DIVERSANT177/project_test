@@ -1,4 +1,7 @@
 <?php
+
+use app\actions\AdminActions;
+
 include "app/header.php";
 $fieldsSignUp = AdminActions::getFields();
 ?>
