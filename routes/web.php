@@ -15,7 +15,7 @@ if($route == "/"){
 
 /*include "DB.php";
 include "actions/AdminActions.php";
-include "logic/SignUp.php";*/
+include "logic/Admin.php";*/
 
 
 

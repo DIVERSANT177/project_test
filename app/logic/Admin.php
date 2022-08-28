@@ -5,10 +5,11 @@ namespace app\logic;
 use app\DB;
 
 
-class SignUp
+class Admin
 {
-    private $errors;
+    //private $errors;
     private $data;
+    //private $id;
 
     public function setData()
     {
@@ -20,7 +21,7 @@ class SignUp
         return "users";
     }
 
-    public function getFields(): array
+    public function getFieldsSignUp(): array
     {
         return [
             "login" => "string",
@@ -29,10 +30,18 @@ class SignUp
         ];
     }
 
-    public function signUpUser()
+    public function getFieldsSignIn(): array
+    {
+        return [
+            "login" => "string",
+            "password" => "string"
+        ];
+    }
+
+    public function signUp()
     {
         $query = "INSERT INTO " . $this->getTableName() . " (";
-        $keys = array_keys($this->getFields());
+        $keys = array_keys($this->getFieldsSignUp());
         foreach ($keys as $key){
             $query .= "$key, ";
         }

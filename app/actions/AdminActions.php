@@ -2,7 +2,7 @@
 
 namespace app\actions;
 
-use app\logic\SignUp;
+use app\logic\Admin;
 
 class AdminActions
 {
@@ -10,17 +10,15 @@ class AdminActions
 
     public static function getFields()
     {
-        if($_SERVER['REQUEST_URI'] == "/admin/signUp"){
-            $signUp = new SignUp();
-            return $signUp->getFields();
-        } elseif ($_SERVER['REQUEST_URI'] == "/admin/signIn"){
-            $signIn = new SignIn();
-            return $signIn->getFields();
-        } else
-        return;
+        $user = new Admin();
+        if($_SERVER['REQUEST_URI'] == "/admin/signUp")
+            return $user->getFieldsSignUp();
+        elseif ($_SERVER['REQUEST_URI'] == "/admin/signIn")
+            return $user->getFieldsSignIn();
     }
 
-    public static function signUp(){
+    public static function signUp()
+    {
         if($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST['signUp'])){
             return;
         }
@@ -30,17 +28,26 @@ class AdminActions
 
         if(self::$error == ""){
             $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $signUp = new SignUp();
+            $user = new Admin();
             foreach ($_POST as $key => $value)
             {
                 $_POST[$key] = htmlspecialchars($value);
             }
-            $signUp->setData();
-            return $signUp->signUpUser();
+            $user->setData();
+            return $user->signUp();
         } else {
             return self::$error;
         }
+    }
 
+    public static function signIn()
+    {
+        if($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST['signIn'])){
+            return;
+        }
+        self::isEmptyFields();
+        self::validateEmail();
+        self::validatePassword();
     }
 
     public static function isEmptyFields()
@@ -52,12 +59,14 @@ class AdminActions
             }
         }
     }
+
     public static function validateEmail()
     {
         if(filter_var($_POST['login'], FILTER_VALIDATE_EMAIL) === false){
-            self::$error .= "Введен невалидный Email <be>";
+            self::$error .= "Введен невалидный Email <br>";
         }
     }
+
     public static function validatePassword()
     {
         $uppercase = preg_match('@[A-Z]@', $_POST['password']);
