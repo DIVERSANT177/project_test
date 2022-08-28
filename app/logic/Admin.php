@@ -61,4 +61,19 @@ class Admin
         }
         header('Location: /');
     }
+
+    public function signIn()
+    {
+        $query = "SELECT * FROM " . $this->getTableName() . " WHERE login = :login;";
+        $query = DB::prepare($query);
+        $query->bindValue("login", $this->data['login']);
+        $query->execute();
+        if($result = $query->fetchObject()){
+
+            /*if(password_verify($this->data['password'], )){
+                echo 1;
+            }*/
+        } else
+            return "Неверный логин или пароль";
+    }
 }

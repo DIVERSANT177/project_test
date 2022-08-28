@@ -25,7 +25,6 @@ class AdminActions
         self::isEmptyFields();
         self::validateEmail();
         self::validatePassword();
-
         if(self::$error == ""){
             $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $user = new Admin();
@@ -48,6 +47,18 @@ class AdminActions
         self::isEmptyFields();
         self::validateEmail();
         self::validatePassword();
+        if(self::$error == ""){
+            $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $user = new Admin();
+            foreach ($_POST as $key => $value)
+            {
+                $_POST[$key] = htmlspecialchars($value);
+            }
+            $user->setData();
+            return $user->signIn();
+        } else {
+            return self::$error;
+        }
     }
 
     public static function isEmptyFields()
